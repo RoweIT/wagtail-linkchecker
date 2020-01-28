@@ -44,8 +44,8 @@ class Migration(migrations.Migration):
             name='automated_scanning',
             field=models.BooleanField(default=False, help_text='Conduct automated sitewide scans for broken links, and send emails if a problem is found.', verbose_name='Automated Scanning'),
         ),
-        migrations.AlterUniqueTogether(
-            name='scanlink',
-            unique_together=set([('url', 'scan')]),
-        ),
+        # migrations.AlterUniqueTogether(
+        #     name='scanlink',
+        #     unique_together=set([('url', 'scan')]),
+        # ),
     ]
