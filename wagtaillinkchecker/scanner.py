@@ -13,11 +13,13 @@ def get_celery_worker_status():
     try:
         from celery.task.control import inspect
         insp = inspect()
+        print(insp)
         d = insp.stats()
         print(d)
         if not d:
             d = {ERROR_KEY: 'No running Celery workers were found.'}
     except IOError as e:
+        print(e)
         from errno import errorcode
         msg = "Error connecting to the backend: " + str(e)
         if len(e.args) > 0 and errorcode.get(e.args[0]) == 'ECONNREFUSED':
