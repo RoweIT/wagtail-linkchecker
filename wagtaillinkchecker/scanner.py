@@ -13,9 +13,6 @@ def get_celery_worker_status():
     try:
         from celery.task.control import inspect
         insp = inspect()
-        for attr in dir(insp):
-            if hasattr(insp, attr):
-                print( "obj.%s = %s" % (attr, getattr(insp, attr)))
         d = insp.stats()
         if not d:
             d = {ERROR_KEY: 'No running Celery workers were found.'}
