@@ -14,6 +14,7 @@ def get_celery_worker_status():
         from celery.task.control import inspect
         insp = inspect()
         d = insp.stats()
+        print(d)
         if not d:
             d = {ERROR_KEY: 'No running Celery workers were found.'}
     except IOError as e:
