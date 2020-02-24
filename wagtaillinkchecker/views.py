@@ -97,13 +97,16 @@ def settings(request):
 
 def run_scan(request):
     site = Site.find_for_request(request)
-    # celery_status = get_celery_worker_status()
-    broken_link_scan(site)
+    celery_status = get_celery_worker_status()
 
-    # if 'ERROR' not in celery_status:
-    #     broken_link_scan(site)
-    # else:
-    #     messages.warning(request, _(
-    #         'No celery workers are running, the scan was not conducted.'))
+    # broken_link_scan(site)
+
+    print(celery_status)
+
+    if 'ERROR' not in celery_status:
+        broken_link_scan(site)
+    else:
+        messages.warning(request, _(
+            'No celery workers are running, the scan was not conducted.'))
 
     return redirect('wagtaillinkchecker')
