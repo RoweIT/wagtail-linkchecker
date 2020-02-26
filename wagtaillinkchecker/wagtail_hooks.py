@@ -28,10 +28,14 @@ def register_admin_urls():
 
 
 @hooks.register('register_settings_menu_item')
-def register_menu_settings():
+def register_menu_settings(user):
+    if not user.is_superuser:
+        shown=False
+
     return MenuItem(
         _('Link Checker'),
         urlresolvers.reverse('wagtaillinkchecker'),
         classnames='icon icon-link',
-        order=300
+        order=300,
+        is_shown=shown
     )
