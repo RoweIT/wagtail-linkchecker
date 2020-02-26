@@ -28,8 +28,8 @@ def register_admin_urls():
 
 
 @hooks.register('register_settings_menu_item')
-def register_menu_settings(user):
-    if user.is_superuser:
+def register_menu_settings(request):
+    if request.user.is_superuser:
         shown=True
     else:
         shown=False
