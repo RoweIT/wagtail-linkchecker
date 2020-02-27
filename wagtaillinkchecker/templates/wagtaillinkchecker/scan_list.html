@@ -16,7 +16,7 @@
                         </h2>
                         <ul class="actions">
                             <li><a href="{% url 'wagtaillinkchecker_scan' scan_pk=scan.pk %}" class="button button-small button-secondary yes">{% trans 'View Scan' %}</a></li>
-														{% if.is_staff==True %}
+														{% if is_staff %}
                             <li><a href="{% url 'wagtaillinkchecker_delete' scan_pk=scan.pk %}" class="button button-small no button-secondary yes">{% trans 'Delete Scan' %}</a></li>
 														{% endif %}
                         </ul>

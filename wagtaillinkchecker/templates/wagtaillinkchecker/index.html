@@ -10,7 +10,7 @@
                 <h1 class="icon icon-link">{% blocktrans %}Link Checker{% endblocktrans %} </h1>
             </div>
         </div>
-        {% if is_staff==True %}
+        {% if is_staff %}
         <div class='right'>
 			<a href="{% url 'wagtaillinkchecker_runscan' %}" class="button">Conduct Scan</a>
 			<a href="{% url 'wagtaillinkchecker_settings' %}" class="button bicolor icon icon-cogs ">Settings</a>
