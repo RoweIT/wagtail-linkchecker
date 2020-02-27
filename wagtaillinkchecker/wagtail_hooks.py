@@ -19,10 +19,6 @@ else:
     from wagtail.wagtailadmin.menu import MenuItem
     from wagtail.wagtailcore import hooks
 
-class CustomAdminMenuItem(MenuItem):
-    def is_shown(self, request):
-        return request.user.is_staff
-
 
 @hooks.register('register_admin_urls')
 def register_admin_urls():
@@ -33,7 +29,7 @@ def register_admin_urls():
 
 @hooks.register('register_settings_menu_item')
 def register_menu_settings():
-    return CustomAdminMenuItem(
+    return MenuItem(
         _('Link Checker'),
         urlresolvers.reverse('wagtaillinkchecker'),
         classnames='icon icon-link',

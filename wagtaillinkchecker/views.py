@@ -45,10 +45,13 @@ def index(request):
 
     paginator, page = paginate(request, scans)
 
+    is_staff = request.user.is_staff
+
     return render(request, 'wagtaillinkchecker/index.html', {
         'page': page,
         'paginator': paginator,
-        'scans': scans
+        'scans': scans,
+        'is_staff': is_staff
     })
 
 
