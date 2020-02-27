@@ -93,6 +93,9 @@ class ScanLink(models.Model):
 
     objects = ScanLinkQuerySet.as_manager()
 
+    class Meta:
+        unique_together = [('url', 'scan')]
+
     def __str__(self):
         return self.url
 
