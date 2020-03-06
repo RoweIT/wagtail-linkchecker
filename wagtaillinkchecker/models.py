@@ -64,11 +64,16 @@ class ScanLinkQuerySet(models.QuerySet):
     def working_links(self):
         return self.valid().filter(broken=False, crawled=True)
 
+    def broken_links_with_owners(self):
+        return [x for x in self.valid().filter(broken=True) if x.page.owner]
+
+    def broken_links_without_owners(self):
+        return [x for x in self.valid().filter(broken=True) if not x.page.owner]
 
 class ScanLink(models.Model):
     scan = models.ForeignKey(Scan, related_name='links',
                              on_delete=models.CASCADE)
-    url = models.URLField(max_length=500)
+    url = models.URLField(max_length=2048)
 
     # If the link has been crawled
     crawled = models.BooleanField(default=False)
@@ -93,11 +98,11 @@ class ScanLink(models.Model):
 
     objects = ScanLinkQuerySet.as_manager()
 
-    class Meta:
-        unique_together = [('url', 'scan')]
-
     def __str__(self):
         return self.url
+
+    def has_owner(self):
+        return True if self.page.owner else False
 
     @property
     def page_is_deleted(self):
@@ -106,7 +111,6 @@ class ScanLink(models.Model):
     def check_link(self):
         from wagtaillinkchecker.tasks import check_link
         check_link.apply_async((self.pk, ))
-
 
 @receiver(pre_delete, sender=Page)
 def delete_tag(instance, **kwargs):

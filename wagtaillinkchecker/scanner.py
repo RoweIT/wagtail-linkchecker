@@ -17,7 +17,6 @@ def get_celery_worker_status():
         if not d:
             d = {ERROR_KEY: 'No running Celery workers were found.'}
     except IOError as e:
-        print(e)
         from errno import errorcode
         msg = "Error connecting to the backend: " + str(e)
         if len(e.args) > 0 and errorcode.get(e.args[0]) == 'ECONNREFUSED':
@@ -85,7 +84,10 @@ def get_url(url, page, site):
         return data
     except requests.exceptions.RequestException as e:
         data['error'] = True
-        data['status_code'] = response.status_code
+
+        if response and response.status_code:
+            data['status_code'] = response.status_code
+            
         data['error_message'] = type(e).__name__ + ': ' + str(e)
         return data
 
